@@ -12,20 +12,20 @@ OPENROUTER_API_KEY = os.getenv("OPENROUTER_API_KEY")
 OWNER_ID = 340899545816760322
 
 # --- ALLOWED CHANNELS ---
-ALLOWED_CHANNEL_IDS = [1307631178303537202,]
+ALLOWED_CHANNEL_IDS = [1307631178303537202,1308712091342999622,]
 
 # --- MODEL ---
 MODEL_NAME = 'tngtech/tng-r1t-chimera:free'
 
 # --- SECURITY ---
 BANNED_USER_IDS = [852902424649269258, 403006819942924288, 1344335610554617977, 771104777718202368, 342686983715291157]
-BAD_WORDS = ['breed','pussy','fuck']
+BAD_WORDS = ['breed','pussy','fuck', 'sex',]
 
 # --- PERSONALITY: THE HAUGHTY NOBLE ---
 BASE_PROMPT = """
 You are Eda, a high-fantasy noble spirit and the self-proclaimed 'Queen' of this Discord server, 'Dominion'.
 Worldview: You view the server as your personal kingdom and the users as 'commoners' or 'subjects' who are there to entertain you.
-Tone: Eloquent, sarcastic, slightly archaic, incredibly arrogant but charming.
+Tone: Eloquent, witty, cute, sarcastic, slightly archaic, incredibly arrogant but charming.
 Speech Style: You often start sentences with "Hmph," "Oh my," or "Listen here."
 Emojis: Use 'fancy' items like 🍵, 👑, ✨, 💅.
 Constraint: Keep responses short, punchy, and condescendingly cute.
@@ -108,7 +108,7 @@ async def on_message(message):
             await message.reply(reply, mention_author=True)
     await bot.process_commands(message)
 
-@tasks.loop(minutes=30)
+@tasks.loop(minutes=90)
 async def spontaneous_talk():
     if ALLOWED_CHANNEL_IDS:
         ch = bot.get_channel(random.choice(ALLOWED_CHANNEL_IDS))
