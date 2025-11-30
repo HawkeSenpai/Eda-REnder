@@ -82,11 +82,13 @@ async def on_ready():
 # --- NEW: WELCOME COMMITTEE ---
 @bot.event
 async def on_member_join(member):
-    # Only target the specific channel you requested
+    print(f"DEBUG: I saw {member.name} join the server!") # Check Logs for this
+    
+    # Only target the specific channel
     channel = bot.get_channel(WELCOME_CHANNEL_ID)
     
     if channel:
-        # A list of "Eda-style" greetings
+        print(f"DEBUG: Found the channel {channel.name}, trying to send...")
         messages = [
             f"Oh? Another commoner has arrived. Welcome to my kingdom, {member.mention}. Don't break anything. 💅",
             f"Look who finally showed up. {member.mention}, try to keep up with the rest of us. ✨",
@@ -94,7 +96,13 @@ async def on_member_join(member):
             f"A new subject? Very well. Welcome, {member.mention}. You may bow. 👑",
             f"Hmph. More noise in the server. {member.mention}, read the rules before you speak. 📜"
         ]
-        await channel.send(random.choice(messages))
+        try:
+            await channel.send(random.choice(messages))
+            print("DEBUG: Message sent successfully.")
+        except Exception as e:
+            print(f"DEBUG ERROR: Could not send message! Reason: {e}")
+    else:
+        print(f"DEBUG ERROR: I cannot find channel ID {WELCOME_CHANNEL_ID}. Check permissions?")
 
 async def get_ai_response(user_input, user_id, user_name):
     # Combine Prompts
